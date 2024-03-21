@@ -91,11 +91,12 @@ public class FusedLocationMethodHandler implements MethodChannel.MethodCallHandl
         requests = new HashMap<>();
     }
 
-    private void initFusedLocationService() {
+    private void initFusedLocationService(final MethodChannel.Result result) {
         settingsClient = LocationServices.getSettingsClient(activity);
         service = LocationServices.getFusedLocationProviderClient(activity);
         enhanceService = LocationServices.getLocationEnhanceService(activity);
         Log.i(TAG, "Fused Location Service has been initialized.");
+        result.success(null);
     }
 
     private void checkLocationSettings(final MethodCall call, final MethodChannel.Result result) {
@@ -388,7 +389,7 @@ public class FusedLocationMethodHandler implements MethodChannel.MethodCallHandl
 
         switch (call.method) {
             case "initFusedLocationService":
-                initFusedLocationService();
+                initFusedLocationService(result);
                 break;
             case "checkLocationSettings":
                 checkLocationSettings(call, result);
